@@ -17,8 +17,6 @@ public class CharacterMovement : MonoBehaviour
 
     private float vertical = 0, horizontal = 0;
 
-    private Rigidbody physic;
-
     private Animator CharacterAnimator;   
 
     float turnSmoothVelocity;
@@ -26,7 +24,6 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         CharacterAnimator = GetComponent<Animator>();
-        physic = GetComponent<Rigidbody>();
     }
 
     public void HandleMovement()

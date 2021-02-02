@@ -27,9 +27,6 @@ public class Jump : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
             DoJump();
 
-        /*if(!controller.isGrounded)
-            anim.SetBool(jumpAnimParameter, false);*/
-
         moveDirection.y += gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
     }
@@ -41,4 +38,8 @@ public class Jump : MonoBehaviour
         anim.SetBool(jumpAnimParameter, true);
     }
 
+    public void JumpFinish()
+    {
+        anim.SetBool(jumpAnimParameter, false);
+    }
 }
