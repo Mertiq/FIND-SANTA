@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class Jump : MonoBehaviour
 {
@@ -15,20 +17,29 @@ public class Jump : MonoBehaviour
 
     float gravity = -9.81f;
 
-
     private void Start()
     {
-        controller = GetComponent<CharacterController>();
-        anim = GetComponent<Animator>();
+        if (GetComponent<PhotonView>().IsMine)
+        {
+            controller = GetComponent<CharacterController>();
+            anim = GetComponent<Animator>();
+        }
+           
     }
     
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
-            DoJump();
+        if (GetComponent<PhotonView>().IsMine)
+        {
 
-        moveDirection.y += gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
+            controller.Move(moveDirection * Time.deltaTime);
+
+            if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
+                DoJump();
+
+            moveDirection.y += gravity * Time.deltaTime;
+            controller.Move(moveDirection * Time.deltaTime);
+        }
     }
 
     void DoJump()
@@ -40,6 +51,10 @@ public class Jump : MonoBehaviour
 
     public void JumpFinish()
     {
-        anim.SetBool(jumpAnimParameter, false);
+        if (GetComponent<PhotonView>().IsMine)
+        {
+            anim.SetBool(jumpAnimParameter, false);
+        }
+
     }
 }

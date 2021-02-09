@@ -1,8 +1,9 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private GameObject player = null;
+    [SerializeField] private GameObject player;
 
     private float verticalMouse = 0, horizontalMouse = 0;
 
@@ -12,8 +13,21 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        mainCam = transform.Find("Main Camera").gameObject;
-        CharacterAnimator = GetComponent<Animator>();
+        if (GetComponent<PhotonView>().IsMine)
+        {
+           
+            
+            mainCam = transform.Find("Main Camera").gameObject;
+            CharacterAnimator = GetComponent<Animator>();
+            player = gameObject.transform.parent.gameObject;
+            Debug.Log(player);
+        }
+        else
+        {
+            mainCam = transform.Find("Main Camera").gameObject;
+            mainCam.SetActive(false);
+        }
+            
     }
 
 

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -23,7 +25,13 @@ public class CharacterMovement : MonoBehaviour
 
     void Start()
     {
-        CharacterAnimator = GetComponent<Animator>();
+        if (GetComponent<PhotonView>().IsMine)
+        {
+            CharacterAnimator = GetComponent<Animator>();
+
+            cam = transform.GetChild(2);
+        }
+           
     }
 
     public void HandleMovement()
